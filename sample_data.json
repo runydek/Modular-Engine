@@ -1,0 +1,42 @@
+[
+    {
+        "model": "products.product",
+        "pk": 1,
+        "fields": {
+            "name": "Laptop",
+            "barcode": "123456789",
+            "price": "12000000.00",
+            "stock": 10
+        }
+    },
+    {
+        "model": "products.product",
+        "pk": 2,
+        "fields": {
+            "name": "Mouse",
+            "barcode": "987654321",
+            "price": "250000.00",
+            "stock": 50
+        }
+    },
+    {
+        "model": "products.product",
+        "pk": 3,
+        "fields": {
+            "name": "Keyboard",
+            "barcode": "456123789",
+            "price": "400000.00",
+            "stock": 30
+        }
+    },
+    {
+        "model": "products.product",
+        "pk": 4,
+        "fields": {
+            "name": "Monitor",
+            "barcode": "321654987",
+            "price": "2000000.00",
+            "stock": 15
+        }
+    }
+]

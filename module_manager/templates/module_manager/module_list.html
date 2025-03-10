@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">Module Manager</h2>
+
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-3 border">Module Name</th>
+                    <th class="p-3 border">Version</th>
+                    <th class="p-3 border">Latest Version</th>
+                    <th class="p-3 border">Status</th>
+                    <th class="p-3 border">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for module in modules %}
+                <tr class="border">
+                    <td class="p-3">{{ module.name }}</td>
+                    <td class="p-3">{{ module.version }}</td>
+                    <td class="p-3">{{ module.latest_version }}</td>
+                    <td class="p-3">
+                        {% if module.is_installed %}
+                            <span class="text-green-600 font-semibold">Installed</span>
+                        {% else %}
+                            <span class="text-red-600 font-semibold">Not Installed</span>
+                        {% endif %}
+                    </td>
+                    <td class="p-3 space-x-2">
+                        {% if module.is_installed %}
+                            <a href="{% url 'uninstall_module' module.name %}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">
+                                Uninstall
+                            </a>
+                            {% if module.has_update %}
+                                <a href="{% url 'upgrade_module' module.name %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                                    Upgrade to {{ module.latest_version }}
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <form method="POST" action="{% url 'install_module' module.name %}">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">
+                                    Install
+                                </button>
+                            </form>
+                        {% endif %}
+                    </td>                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if messages %}
+    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" class="fixed top-5 right-5 z-50">
+        {% for message in messages %}
+            <div class="p-4 rounded-lg shadow-lg {% if message.tags == 'success' %}bg-green-500 text-white{% else %}bg-yellow-500 text-white{% endif %}">
+                {{ message }}
+                <button @click="show = false" class="ml-4 text-white font-bold">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

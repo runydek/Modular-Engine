@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Tambah/Edit Produk{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-xl font-bold mb-4">{% if product %}Edit{% else %}Tambah{% endif %} Produk</h2>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label class="block text-gray-700">Nama Produk</label>
+            <input type="text" name="name" value="{{ product.name|default_if_none:'' }}" required class="w-full p-2 border rounded">
+        </div>
+        <div>
+            <label class="block text-gray-700">Barcode</label>
+            <input type="text" name="barcode" value="{{ product.barcode|default_if_none:'' }}" required class="w-full p-2 border rounded">
+        </div>
+        <div>
+            <label class="block text-gray-700">Harga</label>
+            <input type="number" name="price" value="{{ product.price|default_if_none:'' }}" required class="w-full p-2 border rounded">
+        </div>
+        <div>
+            <label class="block text-gray-700">Stok</label>
+            <input type="number" name="stock" value="{{ product.stock|default_if_none:'' }}" required class="w-full p-2 border rounded">
+        </div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+            {% if product %}Update{% else %}Tambah{% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}

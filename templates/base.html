@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Modular Django{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto flex items-center justify-between py-3 px-6">
+            <a href="{% url 'module_list' %}" class="text-lg font-bold">Modular Django</a>
+            <div class="flex space-x-4">
+                {% url 'product_list' as product_url %}
+                {% if product_url %}
+                    <a href="{{ product_url }}" class="hover:underline">Products</a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="hover:underline">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hover:underline">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-6">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>
