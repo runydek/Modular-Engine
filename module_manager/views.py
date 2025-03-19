@@ -17,10 +17,6 @@ def reload_server():
 
 def module_list(request):
     modules = Module.objects.all()
-    for module in modules:
-        check_latest_version(module)
-    
-    reload_server()
     return render(request, 'module_manager/module_list.html', {'modules': modules})
 
 def install_module(request, module_name):
@@ -51,8 +47,8 @@ def upgrade_module(request, module_name):
         module = Module.objects.get(name=module_name)
         
         if module.has_update:
-            subprocess.run(["python", "manage.py", "makemigrations"], check=True)
-            subprocess.run(["python", "manage.py", "migrate"], check=True)
+            subprocess.run(["python3", "manage.py", "makemigrations"], check=True)
+            subprocess.run(["python3", "manage.py", "migrate"], check=True)
 
             module.version = module.latest_version
             module.save(update_fields=["version"])
@@ -88,3 +84,17 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+    
+def update_latest_version(request, module_name):
+    if request.method == "POST":
+        module = get_object_or_404(Module, name=module_name)
+        new_version = request.POST.get("latest_version").strip()
+
+        if new_version:
+            module.latest_version = new_version
+            module.save(update_fields=["latest_version"])
+            messages.success(request, f"Latest version {module.name} berhasil diperbarui ke {new_version}")
+        else:
+            messages.error(request, "Latest version tidak boleh kosong.")
+
+    return redirect("module_list")

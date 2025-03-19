@@ -20,7 +20,15 @@
                 <tr class="border">
                     <td class="p-3">{{ module.name }}</td>
                     <td class="p-3">{{ module.version }}</td>
-                    <td class="p-3">{{ module.latest_version }}</td>
+                    <td class="p-3">
+                        <form method="POST" action="{% url 'update_latest_version' module.name %}">
+                            {% csrf_token %}
+                            <input type="text" name="latest_version" value="{{ module.latest_version }}" class="border rounded px-2 py-1 w-20">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                                Update
+                            </button>
+                        </form>
+                    </td>
                     <td class="p-3">
                         {% if module.is_installed %}
                             <span class="text-green-600 font-semibold">Installed</span>

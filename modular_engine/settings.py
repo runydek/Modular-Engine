@@ -28,8 +28,6 @@ SECRET_KEY = 'django-insecure-c)=%wd5fh27d-jf_uj0tar144!2%@44f@nsyux5l@21wz#cu7k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -150,3 +148,5 @@ def get_dynamic_apps():
         return [] 
 
 INSTALLED_APPS = BASE_APPS + get_dynamic_apps()
+
+ALLOWED_HOSTS = ["103.151.191.139", "127.0.0.1", "localhost"]

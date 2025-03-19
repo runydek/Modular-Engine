@@ -6,6 +6,7 @@ urlpatterns = [
     path('module/install/<str:module_name>/', views.install_module, name='install_module'),
     path('module/uninstall/<str:module_name>/', views.uninstall_module, name='uninstall_module'),
     path("upgrade/<str:module_name>/", views.upgrade_module, name="upgrade_module"),
+    path('update-version/<str:module_name>/', views.update_latest_version, name='update_latest_version'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 ]
